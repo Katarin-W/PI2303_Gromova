@@ -51,4 +51,17 @@ class Machine {
     }
   }
 
+  bool isAvailable(String coffeeType) {
+    switch (coffeeType) {
+      case 'эспрессо':
+        return _coffeeBeans >= 50 && _water >= 100;
+      case 'капучино':
+        return _coffeeBeans >= 50 && _water >= 100 && _milk >= 150;
+      case 'латте':
+        return _coffeeBeans >= 50 && _water >= 100 && _milk >= 200;
+      default:
+        return false;
+    }
+  }
+  
 }
