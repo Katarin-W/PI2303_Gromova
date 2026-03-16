@@ -63,5 +63,31 @@ class Machine {
         return false;
     }
   }
-  
+
+  void _subtractResources(String coffeeType) {
+    if (coffeeType == 'эспрессо') {
+      _coffeeBeans -= 50;
+      _water -= 100;
+      print('Ресурсы после приготовления эспрессо:');
+      print('Кофе осталось: $_coffeeBeans г');
+      print('Вода осталась: $_water мл');
+    } else if (coffeeType == 'капучино') {
+      _coffeeBeans -= 50;
+      _water -= 100;
+      _milk -= 150;
+      print('Ресурсы после приготовления капучино:');
+      print('Кофе осталось: $_coffeeBeans г');
+      print('Вода осталась: $_water мл');
+      print('Молоко осталось: $_milk мл');
+    } else if (coffeeType == 'латте') {
+      _coffeeBeans -= 50;
+      _water -= 100;
+      _milk -= 200;
+      print('Ресурсы после приготовления латте:');
+      print('Кофе осталось: $_coffeeBeans г');
+      print('Вода осталась: $_water мл');
+      print('Молоко осталось: $_milk мл');
+    }
+  }
+
 }
