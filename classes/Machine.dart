@@ -128,5 +128,44 @@ class Machine {
     print('------------------------');
     return true;
   }
-  
+
+  void addResources({int? coffee, int? milk, int? water}) {
+    if (coffee != null && coffee > 0) {
+      _coffeeBeans += coffee;
+      print('Добавлено кофе: $coffee г');
+    }
+    if (milk != null && milk > 0) {
+      _milk += milk;
+      print('Добавлено молока: $milk мл');
+    }
+    if (water != null && water > 0) {
+      _water += water;
+      print('Добавлено воды: $water мл');
+    }
+    _showResources();
+  }
+
+  void addCash(double amount) {
+    if (amount > 0) {
+      _cash += amount;
+      print('Добавлено денег: $amount руб');
+      print('Всего денег: $_cash руб');
+    }
+  }
+
+  double withdrawCash() {
+    double amount = _cash;
+    _cash = 0;
+    print('Снято денег: $amount руб');
+    return amount;
+  }
+
+  void _showResources() {
+    print('Текущие ресурсы машины:');
+    print('Кофе: $_coffeeBeans г');
+    print('Молоко: $_milk мл');
+    print('Вода: $_water мл');
+    print('Денег: $_cash руб');
+  }
+
 }
