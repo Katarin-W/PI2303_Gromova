@@ -90,4 +90,43 @@ class Machine {
     }
   }
 
+  double _getPrice(String coffeeType) {
+    switch (coffeeType) {
+      case 'эспрессо':
+        return 100.0;
+      case 'капучино':
+        return 150.0;
+      case 'латте':
+        return 180.0;
+      default:
+        return 0.0;
+    }
+  }
+
+  bool makingCoffee(String coffeeType, double payment) {
+    double price = _getPrice(coffeeType);
+    if (payment < price) {
+      print('Недостаточно денег! Нужно: $price руб, внесено: $payment руб');
+      return false;
+    }
+
+    if (!isAvailable(coffeeType)) {
+      print('Извините, недостаточно ресурсов для приготовления $coffeeType');
+      return false;
+    }
+
+    print('Готовим $coffeeType...');
+    _subtractResources(coffeeType);
+    _cash += price;
+    
+    double change = payment - price;
+    if (change > 0) {
+      print('Ваша сдача: $change руб');
+    }
+    
+    print('Ваш $coffeeType готов! Приятного аппетита!');
+    print('------------------------');
+    return true;
+  }
+  
 }
