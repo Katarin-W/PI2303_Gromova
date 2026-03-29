@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'classes/Machine.dart';
+import 'classes/CoffeeType.dart';
+import 'classes/ICoffee.dart';
 
 void main() {
   Machine machine = Machine();
@@ -24,28 +26,25 @@ void main() {
       case '1':
         print('\nПРИГОТОВЛЕНИЕ КОФЕ');
         print('Выберите напиток:');
-        print('1 - Эспрессо (100 руб)');
-        print('2 - Капучино (150 руб)');
-        print('3 - Латте (180 руб)');
+
+        final coffees = CoffeeType.values;
+        for (int i = 0; i < coffees.length; i++) {
+          ICoffee coffee = coffees[i].getCoffee();
+          print('${i + 1} - ${coffee.name()} (${coffee.price()} руб)');
+        }
         
         stdout.write('Ваш выбор: ');
         String? choice = stdin.readLineSync();
         
         stdout.write('Внесите оплату (руб): ');
         double payment = double.parse(stdin.readLineSync() ?? '0');
-        
-        switch (choice) {
-          case '1':
-            machine.makingCoffee('эспрессо', payment);
-            break;
-          case '2':
-            machine.makingCoffee('капучино', payment);
-            break;
-          case '3':
-            machine.makingCoffee('латте', payment);
-            break;
-          default:
-            print('Неверный выбор напитка');
+
+        int choiceIndex = int.tryParse(choice ?? '0') ?? 0;
+        if (choiceIndex >= 1 && choiceIndex <= coffees.length) {
+          ICoffee selectedCoffee = coffees[choiceIndex - 1].getCoffee();
+          machine.makingCoffee(selectedCoffee, payment);
+        } else {
+          print('Неверный выбор напитка');
         }
         break;
 
@@ -77,10 +76,7 @@ void main() {
 
       case '5':
         print('\nТЕКУЩИЕ РЕСУРСЫ');
-        print('Кофе: ${machine.coffeeBeans} г');
-        print('Молоко: ${machine.milk} мл');
-        print('Вода: ${machine.water} мл');
-        print('Денег: ${machine.cash} руб');
+        machine.showResources();
         print('------------------------');
         break;
 
