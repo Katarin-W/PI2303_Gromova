@@ -1,5 +1,6 @@
 import 'Resources.dart';
 import 'ICoffee.dart';
+import 'CoffeeMaker.dart';
 
 class Machine {
   Resources _resources;
@@ -21,7 +22,7 @@ class Machine {
            _resources.water >= coffee.water();
   }
 
-  bool makingCoffee(ICoffee coffee, double payment) {
+  Future<bool> makingCoffee(ICoffee coffee, double payment) async {
     if (payment < coffee.price()) {
       print('Недостаточно денег! Нужно: ${coffee.price()} руб, внесено: $payment руб');
       return false;
@@ -33,25 +34,31 @@ class Machine {
     }
 
     print('Готовим ${coffee.name()}...');
+    print('------------------------');
+
+    CoffeeMaker coffeeMaker = CoffeeMaker();
+    await coffeeMaker.makeCoffee(coffee);
 
     _resources.subtractCoffeeBeans(coffee.coffeeBeans());
     _resources.subtractMilk(coffee.milk());
     _resources.subtractWater(coffee.water());
     _resources.addCash(coffee.price());
     
-    print('Ресурсы после приготовления ${coffee.name()}:');
+    print('\nРЕСУРСЫ ПОСЛЕ ПРИГОТОВЛЕНИЯ:');
     print('Кофе осталось: ${_resources.coffeeBeans} г');
     if (coffee.milk() > 0) {
       print('Молоко осталось: ${_resources.milk} мл');
     }
     print('Вода осталась: ${_resources.water} мл');
+    print('Денег в машине: ${_resources.cash} руб');
     
     double change = payment - coffee.price();
     if (change > 0) {
       print('Ваша сдача: $change руб');
     }
     
-    print('Ваш ${coffee.name()} готов! Приятного аппетита!');
+    print('------------------------');
+    print('СПАСИБО ЗА ПОКУПКУ! ЖДЕМ ВАС СНОВА!');
     print('------------------------');
     return true;
   }
