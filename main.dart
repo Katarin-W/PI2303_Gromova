@@ -3,7 +3,7 @@ import 'classes/Machine.dart';
 import 'classes/CoffeeType.dart';
 import 'classes/ICoffee.dart';
 
-void main() {
+void main() async {
   Machine machine = Machine();
 
   print('ПРОГРАММА УПРАВЛЕНИЯ КОФЕМАШИНОЙ');
@@ -42,7 +42,7 @@ void main() {
         int choiceIndex = int.tryParse(choice ?? '0') ?? 0;
         if (choiceIndex >= 1 && choiceIndex <= coffees.length) {
           ICoffee selectedCoffee = coffees[choiceIndex - 1].getCoffee();
-          machine.makingCoffee(selectedCoffee, payment);
+          await machine.makingCoffee(selectedCoffee, payment);
         } else {
           print('Неверный выбор напитка');
         }
